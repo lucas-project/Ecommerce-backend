@@ -66,13 +66,16 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
-        $products = Product::where('name', 'like', "%$keyword%")
-                           ->orWhere('code', 'like', "%$keyword%")
-                           ->orWhere('size', 'like', "%$keyword%")
-                           ->orWhere('color', 'like', "%$keyword%")
-                           ->get();
 
-        return view('products.search', compact('products'));
+        $products = Product::where(function($query) use ($keyword) {
+            $query->whereRaw('lower(name) like ?', ["%".strtolower($keyword)."%"])
+                ->orWhere('code', 'like', "%$keyword%")
+                ->orWhere('size', 'like', "%$keyword%")
+                ->orWhere('color', 'like', "%$keyword%");
+        })->get();
+
+        return view('products.search', compact('products', 'keyword'));
     }
+
 }
 

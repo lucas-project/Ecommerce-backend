@@ -18,7 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('products.index') }}">Products</a>
                 </li>
-                <!-- Add more navigation items as needed -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('products.search') }}">Search</a>
+                </li>
             </ul>
         </div>
     </nav>

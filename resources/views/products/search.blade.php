@@ -1,5 +1,3 @@
-<!-- resources/views/products/search.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -7,33 +5,38 @@
 
     <form action="{{ route('products.search') }}" method="GET">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search Products" name="search">
+            <input type="text" class="form-control" placeholder="Search Products" name="keyword" value="{{ $keyword }}">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
         </div>
     </form>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Code</th>
-                <th>Price</th>
-                <th>Size</th>
-                <th>Color</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
+    @if($products->isEmpty())
+        <p>No matching products found for "{{ $keyword }}".</p>
+    @else
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->code }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->size }}</td>
-                    <td>{{ $product->color }}</td>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Price</th>
+                    <th>Size</th>
+                    <th>Color</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($products as $product)
+                    <tr>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->code }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->size }}</td>
+                        <td>{{ $product->color }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 @endsection
+
