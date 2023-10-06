@@ -1,4 +1,24 @@
-@extends('layouts.app')
+
+@extends('layouts.navigation')
+
+@if (Auth::check())
+    @auth
+        <li class="nav-item d-flex align-items-center">
+            <span class="navbar-text mr-3">Welcome, {{ Auth::user()->name }}</span>
+            <a class="nav-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
+    @endauth
+@else
+    Welcome, Guest!
+@endif
 
 @section('content')
     <h1>Search Results</h1>
