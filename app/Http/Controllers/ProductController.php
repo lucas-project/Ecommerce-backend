@@ -28,6 +28,11 @@ class ProductController extends Controller
             'color' => 'nullable|string|max:255',
         ]);
 
+        $validatedData['name'] = htmlspecialchars($validatedData['name']);
+        $validatedData['code'] = htmlspecialchars($validatedData['code']);
+        $validatedData['size'] = htmlspecialchars($validatedData['size']);
+        $validatedData['color'] = htmlspecialchars($validatedData['color']);    
+
         $product = Product::create($validatedData);
 
         return redirect('/products')->with('success', 'Product created successfully');
